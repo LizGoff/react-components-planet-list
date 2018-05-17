@@ -44,8 +44,12 @@ class App extends Component {
     });
   }
 
-  getFromSwapi = (nextUrl) => {
+  componentDidMount() {
+    let nextUrl = 'https://swapi.co/api/planets/?format=json';
+    this.getFromSwapi(nextUrl);
+  }
 
+  getFromSwapi = (nextUrl) => {
     axios({
       method: 'GET',
       url: nextUrl,
@@ -54,10 +58,9 @@ class App extends Component {
         this.setState({
           planetList: [
             ...this.state.planetList,
-            ...response.data.results.map(planet => ({ name: planet.name, diameter: planet.diameter }))
+            ...response.data.results,
           ]
         })
-    
         let url = response.data.next;
         if (url != null) {
           this.getFromSwapi(url);
@@ -68,12 +71,6 @@ class App extends Component {
         console.log(error);
       })
   }
-
-  componentDidMount() {
-    let nextUrl = 'https://swapi.co/api/planets/?format=json';
-    this.getFromSwapi(nextUrl);
-  }
-
 
   render() {
     return (
@@ -95,7 +92,7 @@ class App extends Component {
         <StarList starList={this.state.starList} />
 
         <PlanetList planetList={this.state.planetList} />
-
+        {/* {JSON.stringify(this.state.planetList)} */}
 
       </div>
     );

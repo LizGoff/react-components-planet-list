@@ -6,6 +6,7 @@ class PlanetList extends Component {
     return (
       <div>
         <ul>
+            {/* the key in mostall of our databases will be id */}
           {this.props.planetList.map(planet => <li key={planet.name}>
             The planet {planet.name} is {planet.diameter} million km in diameter
           </li>)}
